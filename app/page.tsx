@@ -20,10 +20,11 @@ export default function Home() {
   const [danCount, setDanCount] = useState(0); // 段カウント
   const [meCount, setMeCount] = useState(0); //目カウント
   const [isDanActive, setDanActive] = useState(true); //トグルボタン
+  const [recordedCounts, setRecordedCounts] = useState([]); //記録されたリスト
   const min = 0;
   const max = 999;
 
-  //
+  // 増減
   const handleIncrement = () => {
     if (isDanActive && danCount <= max) {
       setDanCount(danCount + 1);
@@ -32,7 +33,6 @@ export default function Home() {
     }
   };
   const handleDecrement = () => {
-    console.log("danCount", danCount);
     if (isDanActive && danCount > min) {
       setDanCount(danCount - 1);
     } else if (!isDanActive && meCount > min) {
@@ -42,12 +42,29 @@ export default function Home() {
   const toggleCount = () => {
     setDanActive(!isDanActive);
   };
+  // 選択中の段or目をリセット
   const handleReset = () => {
+    // トグルによって段か目を変える
     if (isDanActive) {
       setDanCount(0);
     } else {
       setMeCount(0);
     }
+  };
+  // リスト含めてすべてをリセット
+  const handleAllReset = () => {
+    setRecordedCounts([]);
+    setDanCount(0);
+    setMeCount(0);
+  };
+  // 次の段に移動
+  const handleRecordNextDan = () => {
+    // 現在の段数を記録する
+    const newRecord = `${danCount}段${meCount}目`;
+    setRecordedCounts([newRecord, ...recordedCounts]);
+    // 段数関係なく次段に行く
+    setDanCount(danCount + 1);
+    setMeCount(0);
   };
 
   return (
@@ -71,9 +88,9 @@ export default function Home() {
           </span>
         </label>
 
-        <p>
+        <div>
           段：{danCount} / 目：{meCount}
-        </p>
+        </div>
 
         <div className="grid grid-cols-3 gap-4">
           <MyButton
@@ -86,12 +103,25 @@ export default function Home() {
             text="-"
             disabled={danCount < min || meCount < min}
           />
+          <MyButton onClick={handleRecordNextDan} text="次の段に移動" />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
           <MyButton
             onClick={handleReset}
             disabled={danCount >= max || meCount >= max}
-            text="リセット"
+            text={isDanActive ? "段をリセット" : "目をリセット"}
+          />
+          <MyButton
+            onClick={handleAllReset}
+            disabled={danCount >= max || meCount >= max}
+            text="すべてをリセット"
           />
         </div>
+        <ul>
+          {recordedCounts.map((record, index) => (
+            <li key={index}>{record}</li>
+          ))}
+        </ul>
       </main>
     </div>
   );
