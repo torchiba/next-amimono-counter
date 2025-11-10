@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'amimono-counter | あみものカウンター',
   description: 'Next.js製の編み物カウンターアプリ',
   icons: {

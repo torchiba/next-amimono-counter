@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 function MyButton({ count, onClick, text, disabled }) {
@@ -17,10 +16,10 @@ function MyButton({ count, onClick, text, disabled }) {
 }
 
 export default function Home() {
-  const [danCount, setDanCount] = useState(0); // 段カウント
-  const [meCount, setMeCount] = useState(0); //目カウント
-  const [isDanActive, setDanActive] = useState(true); //トグルボタン
-  const [recordedCounts, setRecordedCounts] = useState([]); //記録されたリスト
+  const [danCount, setDanCount] = useState<number>(0); // 段カウント
+  const [meCount, setMeCount] = useState<number>(0); //目カウント
+  const [isDanActive, setDanActive] = useState<boolean>(true); //トグルボタン
+  const [recordedCounts, setRecordedCounts] = useState<string[]>([]); //記録されたリスト
   const min = 0;
   const max = 999;
 
@@ -39,9 +38,7 @@ export default function Home() {
       setMeCount(meCount - 1);
     }
   };
-  const toggleCount = () => {
-    setDanActive(!isDanActive);
-  };
+
   // 選択中の段or目をリセット
   const handleReset = () => {
     // トグルによって段か目を変える
@@ -61,7 +58,11 @@ export default function Home() {
   const handleRecordNextDan = () => {
     // 現在の段数を記録する
     const newRecord = `${danCount}段${meCount}目`;
-    setRecordedCounts([newRecord, ...recordedCounts]);
+    setRecordedCounts((prev) => {
+      const next = [newRecord, ...prev];
+      console.log("handleRecordNextDan - recordedCounts(next)", next);
+      return next;
+    });
     // 段数関係なく次段に行く
     setDanCount(danCount + 1);
     setMeCount(0);
@@ -71,7 +72,7 @@ export default function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-8 row-start-2 items-center">
         <h1 className="text-5xl font-extrabold dark:text-white">
-          あみものカウンター
+          amimono-counter
         </h1>
 
         <label className="inline-flex items-center cursor-pointer">

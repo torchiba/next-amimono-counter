@@ -31,11 +31,8 @@ Next.js 製のシンプルな編み物カウンターアプリです。
 ## セットアップ
 
 ```bash
-# 依存関係をインストール
-pnpm install
-
-# 開発サーバーを起動
-pnpm dev
+npm i
+npm run dev
 ```
 
 アプリは http://localhost:3000 で確認できます。
