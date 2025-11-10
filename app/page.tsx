@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-function MyButton({ count, onClick, text, disabled }) {
+function MyButton({
+  onClick, text, disabled,
+}: { onClick: () => void; text: string; disabled?: boolean }) {
   return (
     <button
       type="button"
