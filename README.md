@@ -2,7 +2,8 @@
 
 Next.js 製のシンプルな編み物カウンターアプリです。
 「段」と「目」を切り替えながら、+ / – ボタンでカウントアップ・ダウンできます。
-ローカルにデータを保存するため、ページを閉じても進捗を保持します。
+ローカルにデータを保存するため、ページを閉じても進捗を保持します。  
+→ [公開サイトを見る](https://torchiba-amimono-counter.netlify.app/)
 
 ---
 
@@ -46,14 +47,6 @@ amimono-counter/
 ├─ app/
 │  ├─ layout.tsx      # メタデータ・全体レイアウト
 │  └─ page.tsx        # メイン画面（段・目カウンター）
-├─ components/
-│  ├─ CounterDisplay.tsx
-│  ├─ CounterControls.tsx
-│  ├─ ModeToggle.tsx
-│  └─ RecordList.tsx
-├─ hooks/
-│  ├─ useKnittingCounter.ts
-│  └─ useLocalStorage.ts
 ├─ public/
 │  └─ icons, favicon など
 └─ README.md
