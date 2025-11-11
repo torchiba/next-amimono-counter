@@ -24,14 +24,11 @@ export default function Home() {
   const [recordedCounts, setRecordedCounts] = useState<string[]>([]);
   const min = 0;
   const max = 999;
-  const activeCount:number = isDanActive ? danCount : meCount;
-  console.log("render - activeCount", activeCount);
+  const activeCount = isDanActive ? danCount : meCount;
   const isIncDisabled = activeCount > max;
   const isDecDisabled = activeCount < min;
-  console.log("render - isIncDisabled", isIncDisabled);
-  console.log("render - isDecDisabled", isDecDisabled);
-
-
+  const isAllZero = danCount === 0 && meCount === 0;
+  
   // 増減
   const handleIncrement = () => {
     if (activeCount >= max) return;
@@ -126,12 +123,12 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-4">
           <MyButton
             onClick={handleReset}
-            disabled={danCount >= max || meCount >= max}
+            disabled={isAllZero}
             text={isDanActive ? "段をリセット" : "目をリセット"}
           />
           <MyButton
             onClick={handleAllReset}
-            disabled={danCount >= max || meCount >= max}
+            disabled={isAllZero}
             text="すべてをリセット"
           />
         </div>
