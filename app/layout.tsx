@@ -14,10 +14,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'amimono-counter | あみものカウンター',
-  description: 'Next.js製の編み物カウンターアプリ',
+  description: "編み物の段・目をカウントできるシンプルなカウンターアプリ",
+  viewport: "width=device-width, initial-scale=1",
   icons: {
     icon: '/favicon.png',
     apple: '/apple-touch-icon.png',
+  },
+  openGraph: {
+    title: "amimono-counter",
+    description: "編み物の段・目をカウントできるシンプルなカウンターアプリ",
+    url: "https://torchiba-amimono-counter.netlify.app",
+    siteName: "amimono-counter",
+    type: "website",
   },
 };
 
@@ -27,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
