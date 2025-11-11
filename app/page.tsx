@@ -18,26 +18,43 @@ function MyButton({
 }
 
 export default function Home() {
-  const [danCount, setDanCount] = useState<number>(0); // 段カウント
-  const [meCount, setMeCount] = useState<number>(0); //目カウント
-  const [isDanActive, setDanActive] = useState<boolean>(true); //トグルボタン
-  const [recordedCounts, setRecordedCounts] = useState<string[]>([]); //記録されたリスト
+  const [danCount, setDanCount] = useState<number>(0);
+  const [meCount, setMeCount] = useState<number>(0);
+  const [isDanActive, setDanActive] = useState<boolean>(true);
+  const [recordedCounts, setRecordedCounts] = useState<string[]>([]);
   const min = 0;
   const max = 999;
+  const activeCount:number = isDanActive ? danCount : meCount;
+  console.log("render - activeCount", activeCount);
+  const isIncDisabled = activeCount > max;
+  const isDecDisabled = activeCount < min;
+  console.log("render - isIncDisabled", isIncDisabled);
+  console.log("render - isDecDisabled", isDecDisabled);
+
 
   // 増減
   const handleIncrement = () => {
-    if (isDanActive && danCount <= max) {
-      setDanCount(danCount + 1);
-    } else if (!isDanActive && meCount <= max) {
-      setMeCount(meCount + 1);
+    if (activeCount >= max) return;
+    if (isDanActive) {
+      const next = Math.min(max, danCount + 1);
+      console.log("handleIncrement - danCount", next);
+      setDanCount(next);
+    } else {
+      const next = Math.min(max, meCount + 1);
+      console.log("handleIncrement - meCount", next);
+      setMeCount(next)
     }
   };
   const handleDecrement = () => {
-    if (isDanActive && danCount > min) {
-      setDanCount(danCount - 1);
-    } else if (!isDanActive && meCount > min) {
-      setMeCount(meCount - 1);
+    if (activeCount <= min) return;
+    if (isDanActive) {
+      const next = Math.max(min, danCount - 1);
+      console.log("handleIncrement - danCount", next);
+      setDanCount(next);
+    } else {
+      const next = Math.max(min, meCount - 1);
+      console.log("handleIncrement - meCount", next);
+      setMeCount(next)
     }
   };
 
@@ -65,7 +82,6 @@ export default function Home() {
       console.log("handleRecordNextDan - recordedCounts(next)", next);
       return next;
     });
-    // 段数関係なく次段に行く
     setDanCount(danCount + 1);
     setMeCount(0);
   };
@@ -92,19 +108,18 @@ export default function Home() {
         </label>
 
         <div>
-          段：{danCount} / 目：{meCount}
+          段：<strong>{danCount}</strong> / 目：<strong>{meCount}</strong>
         </div>
-
         <div className="grid grid-cols-3 gap-4">
           <MyButton
             onClick={handleIncrement}
-            text="+"
-            disabled={danCount >= max || meCount >= max}
+            text="+1"
+            disabled={isIncDisabled}
           />
           <MyButton
             onClick={handleDecrement}
-            text="-"
-            disabled={danCount < min || meCount < min}
+            text="-1"
+            disabled={isDecDisabled}
           />
           <MyButton onClick={handleRecordNextDan} text="次の段に移動" />
         </div>
